@@ -120,7 +120,7 @@ def get_with_wait(driver, url, isWait=False, timeout=30):
 
     if isWait:
         wait = WebDriverWait(driver, timeout)
-        wait.until(EC.visibility_of_all_elements_located)
+        wait.until(EC.presence_of_all_elements_located)
 
 
 # ドライバを開いたままにする設定

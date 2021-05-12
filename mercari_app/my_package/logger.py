@@ -1,4 +1,4 @@
-from logging import getLogger,  FileHandler, StreamHandler, Formatter, DEBUG
+from logging import getLogger,  FileHandler, StreamHandler, NullHandler, Formatter, DEBUG
 
 
 logger = getLogger(__name__)
@@ -7,6 +7,7 @@ timeFormatter = '%Y-%m-%d %H:%M:%S'
 fomatterSetting = Formatter(message, timeFormatter)
 # handler = FileHandler('logger.log')  # テキスト出力する場合はコメントアウトを外す
 handler = StreamHandler()  # テキスト出力するときはコメントアウトする
+# handler = NullHandler()
 handler.setLevel(DEBUG)
 logger.setLevel(DEBUG)
 handler.setFormatter(fomatterSetting)
