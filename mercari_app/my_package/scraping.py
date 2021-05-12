@@ -33,7 +33,7 @@ def set_driver(isHeadless=False, isManager=False, isSecret=False, isExtension=Fa
         'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.157 Safari/537.36',
         'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36',
     ]
-    
+
     if os.name == 'nt':  # Windows
         driver_path = 'chromedriver.exe'
     elif os.name == 'posix':  # Mac
@@ -61,7 +61,16 @@ def set_driver(isHeadless=False, isManager=False, isSecret=False, isExtension=Fa
         if (not isHeadless) or (not isExtension):
             # options.add_argument('--user-data-dir=' + profile_path)
             # options.add_argument('--profile-directory=Profile 1')
-            options.add_argument('--user-data-dir=' + os.path.join(os.getcwd(),"profile"))
+            if getattr(sys, 'frozen', False):
+                directory_path = os.path.dirname(sys.executable)
+                if '.app' in directory_path:
+                    idx = directory_path.find('.app')
+                    directory_path = directory_path[:idx]
+                    idx = directory_path.rfind('/')
+                    directory_path = directory_path[:idx]
+            else:
+                directory_path = os.getcwd()
+            options.add_argument('--user-data-dir=' + os.path.join(directory_path,"profile"))
 
     options.add_argument('--disable-gpu')
     options.add_argument('--no-sandbox')
